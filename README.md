@@ -27,3 +27,14 @@ Features adding personnel, listing them with sorting by different attributes, an
 
 ```bash
 pip install flask
+```
+
+3. Start the server:
+```bash
+python app.py
+```
+
+4. Open in browser: http://localhost:5000
+
+🔗 See More
+Visit [my website](https://ganaa.work) for more projects and demos.
