@@ -1,16 +1,49 @@
 # Personnel Manager
 
-A simple Flask web app to manage personnel records using a C backend library (via ctypes).  
-Features adding personnel, listing them with sorting by different attributes, and a clean interactive frontend.
+A web-based personnel management system using a Flask frontend and a C backend.  
+Records are stored and sorted in binary trees and doubly-linked lists, all handled in C for speed and structure.
 
 ---
 
 ## Features
 
-- Add personnel records (Last Name, First Name, Middle Initial, Age, ID, Salary)
-- View personnel list with sorting options: Name, Age, ID, Salary
-- Uses a C backend (`libpersonnel.so`) for storing and sorting records via ctypes
-- Responsive frontend with dynamic updates using JavaScript and fetch API
+- Add personnel records with: Last Name, First Name, M.I., Age, ID, Salary
+- Store records in multiple binary search trees (sorted by: name, age, ID, salary)
+- Convert trees into a doubly-linked list for navigation
+- Print records sorted in various orders
+- View and sort records through a Flask web UI
+
+---
+
+## C Backend Design
+
+The C code handles data storage and sorting efficiently using trees and lists:
+
+- `PERSONNEL_REC`: struct representing each person
+- Binary search trees (`NODE*`) for sorting by:
+  - Name
+  - Age
+  - ID
+  - Salary
+- `insert_personnel_record(...)`: inserts a record into a tree with custom comparator
+- Comparators:
+  - `compare_name`
+  - `compare_age`
+  - `compare_id_number`
+  - `compare_salary`
+- In-order traversal (`traverse_and_print_records`) for sorted output
+- Tree → Doubly-linked list conversion (`insert_from_tree_into_list`)
+- Print records:
+  - Forward / Backward traversal
+  - First `n` records via wraparound
+
+---
+
+## Stack
+
+- **Frontend:** HTML + CSS + JS (fetch API)
+- **Backend:** Python Flask server with C backend via `ctypes`
+- **C Structures:** BST and doubly-linked list
 
 ---
 
