@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Personnel Manager</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <h1>Add Personnel</h1>
+    <form id="personnel-form">
+      <input type="text" name="last_name" placeholder="Last Name" required />
+      <input type="text" name="first_name" placeholder="First Name" required />
+      <input
+        type="text"
+        name="middle_initial"
+        placeholder="Middle Initial"
+        maxlength="1"
+        required
+      />
+      <input type="number" name="age" placeholder="Age" required />
+      <input type="number" name="id_type" placeholder="ID" required />
+      <input type="number" name="salary" placeholder="Salary" required />
+      <button type="submit">Add</button>
+    </form>
+
+    <h2>Personnel List</h2>
+
+    <label for="sort-select">Sort by:</label>
+    <select id="sort-select">
+      <option value="name">Name</option>
+      <option value="age">Age</option>
+      <option value="id">ID</option>
+      <option value="salary">Salary</option>
+    </select>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>M.I.</th>
+          <th>Age</th>
+          <th>ID</th>
+          <th>Salary</th>
+        </tr>
+      </thead>
+      <tbody id="personnel-table-body"></tbody>
+    </table>
+
+    <script>
+      async function fetchAndRender(sortKey) {
+        const res = await fetch(`/api/list?sort=${sortKey}`);
+        const personnel = await res.json();
+
+        const tbody = document.getElementById("personnel-table-body");
+        tbody.innerHTML = ""; // Clear previous rows
+
+        for (const p of personnel) {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+          <td>${p.last_name}</td>
+          <td>${p.first_name}</td>
+          <td>${p.middle_initial}</td>
+          <td>${p.age}</td>
+          <td>${p.id_type}</td>
+          <td>${p.salary}</td>
+        `;
+          tbody.appendChild(row);
+        }
+      }
+
+      document.getElementById("sort-select").addEventListener("change", (e) => {
+        fetchAndRender(e.target.value);
+      });
+
+      document
+        .getElementById("personnel-form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const form = e.target;
+          const data = {
+            last_name: form.last_name.value,
+            first_name: form.first_name.value,
+            middle_initial: form.middle_initial.value,
+            age: parseInt(form.age.value),
+            id_type: parseInt(form.id_type.value),
+            salary: parseInt(form.salary.value),
+          };
+
+          const res = await fetch("/add_record", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await res.json();
+          if (result.success) {
+            fetchAndRender(document.getElementById("sort-select").value);
+            form.reset();
+          } else {
+            alert("Failed to add record: " + result.error);
+          }
+        });
+
+      window.onload = () => fetchAndRender("name");
+    </script>
+  </body>
+</html>
