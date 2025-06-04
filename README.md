@@ -14,7 +14,7 @@ Records are stored and sorted in binary trees and doubly-linked lists, all handl
 - View and sort records through a Flask web UI
 
 ---
-![Preview]([Personnel Manager/Preview.png](https://github.com/Gankhulug456/Personnel-Manager/blob/main/Personnel%20Manager/Preview.png))
+![Personnel Manager Preview](https://raw.githubusercontent.com/Gankhulug456/Personnel-Manager/main/Personnel%20Manager/Preview.png)
 
 
 ## C Backend Design
