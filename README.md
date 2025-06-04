@@ -7,7 +7,7 @@ Records are stored and sorted in binary trees and doubly-linked lists, all handl
 
 ## Features
 
-- Add personnel records with: Last Name, First Name, M.I., Age, ID, Salary
+- Add personnel records with: Last Name, First Name, Middle Initial, Age, ID, Salary
 - Store records in multiple binary search trees (sorted by: name, age, ID, salary)
 - Convert trees into a doubly-linked list for navigation
 - Print records sorted in various orders
